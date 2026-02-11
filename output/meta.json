@@ -1,0 +1,20 @@
+[
+  {
+    "file": "3_fc21cff16e05519324936c9c89d642bb_1460720162.jpg",
+    "loader": "image_ocr",
+    "text_len": 2069,
+    "status": "ok"
+  },
+  {
+    "file": "5_grazhdanskijj_kodeks_rossijjskojj_federacii_chast_pervaya.pdf",
+    "loader": "pdf",
+    "text_len": 4658,
+    "status": "ok"
+  },
+  {
+    "file": "e6ce831e-6346-4397-b2a0-47e9470304a6.webp",
+    "loader": "image_ocr",
+    "text_len": 2977,
+    "status": "ok"
+  }
+]

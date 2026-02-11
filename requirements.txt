@@ -1,0 +1,6 @@
+requests
+pypdf
+python-dotenv
+python-docx
+pytesseract
+Pillow
