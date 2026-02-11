@@ -39,31 +39,35 @@ LLM: **OpenRouter** (используются бесплатные модели 
 
 ## Структура проекта
 
+```text
+.
 ├── main.py
 ├── config.py
 ├── requirements.txt
 ├── src
-│ ├── llm
-│ │ ├── openrouter_client.py # клиент OpenRouter + retry/стабильность
-│ │ └── prompts.py # промпты (структура + антигаллюцинации)
-│ ├── loaders
-│ │ ├── base.py # базовые типы
-│ │ ├── pdf.py # извлечение текста из PDF
-│ │ ├── docx.py # извлечение текста из DOCX
-│ │ ├── text.py # TXT/MD
-│ │ ├── image_ocr.py # OCR изображений (Tesseract)
-│ │ └── init.py # роутинг по расширениям
-│ ├── summarize
-│ │ ├── chunking.py # нарезка текста на чанки
-│ │ ├── summarize_doc.py # саммари одного документа + автопродолжение
-│ │ └── summarize_folder.py # общее саммари по папке
-│ └── utils
-│ ├── files.py # обход папки, фильтрация расширений
-│ └── logging.py # логирование
+│   ├── llm
+│   │   ├── openrouter_client.py  # клиент OpenRouter + retry/стабильность
+│   │   └── prompts.py            # промпты (структура + антигаллюцинации)
+│   ├── loaders
+│   │   ├── __init__.py           # роутинг по расширениям
+│   │   ├── base.py               # базовые типы
+│   │   ├── pdf.py                # извлечение текста из PDF
+│   │   ├── docx.py               # извлечение текста из DOCX
+│   │   ├── text.py               # TXT/MD
+│   │   └── image_ocr.py          # OCR изображений (Tesseract)
+│   ├── summarize
+│   │   ├── chunking.py           # нарезка текста на чанки
+│   │   ├── summarize_doc.py      # саммари одного документа + автопродолжение
+│   │   └── summarize_folder.py   # общее саммари по папке
+│   └── utils
+│       ├── files.py              # обход папки, фильтрация расширений
+│       └── logging.py            # логирование
 └── tools
-├── ping_openrouter.py # проверка ключа
-├── list_free_models.py # список free моделей
-└── find_working_model.py # поиск реально рабочей free модели
+    ├── ping_openrouter.py        # проверка ключа
+    ├── list_free_models.py       # список free моделей
+    └── find_working_model.py     # поиск реально рабочей free модели
+```
+
 
 2) Переменные окружения (.env)
 
@@ -101,3 +105,23 @@ TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
 output/folder_summary.md
 
 output/by_file.json
+
+Примечания по устойчивости LLM
+
+В проекте учтены edge-cases бесплатных моделей:
+
+возможен пустой content при finish_reason="length" → реализован retry с увеличением max_tokens
+
+возможен обрыв ответа → реализовано автопродолжение (continuation) с сохранением структуры
+
+
+
+Планы для поэтапного расширения (если развивать дальше):
+
+OCR с оценкой уверенности / фильтрацией мусора
+
+извлечение таблиц/сканов PDF (OCR внутри PDF)
+
+сохранение результата в CRM / отправка в чат-бота
+
+добавление классификатора входящих обращений по шаблонам
